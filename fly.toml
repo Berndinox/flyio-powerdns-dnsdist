@@ -1,6 +1,6 @@
 # fly.toml file generated for pdns-dnsdist on 2023-01-04T11:50:35+01:00
 
-app = "pdns-dnsdist"
+app = "pdns"
 kill_signal = "SIGINT"
 kill_timeout = 5
 processes = []
