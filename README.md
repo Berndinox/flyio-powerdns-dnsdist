@@ -1,2 +1,8 @@
 # flyio-powerdns-dnsdist
-DNS LB and SEC for Fly.io
+DNS LB and SEC for Fly.io  
+Is connecting a PDNS Instance on Fly.io.    
+On the PDNS Instalce App issue: `flyctl ips allocate-v6 --private`  
+
+## Config
+DNSDISTCONF_BACKEND_IP=[::0]  
+The private IPv6 IP of the PDNS Auth Server.  
