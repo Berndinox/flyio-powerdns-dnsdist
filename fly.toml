@@ -1,0 +1,49 @@
+# fly.toml file generated for pdns-dnsdist on 2023-01-04T11:50:35+01:00
+
+app = "pdns-dnsdist"
+kill_signal = "SIGINT"
+kill_timeout = 5
+processes = []
+
+[env]
+  DNSDISTCONF_BACKEND_IP = "fdaa:1:160b:0:1::2"
+
+[experimental]
+  allowed_public_ports = []
+  auto_rollback = true
+
+[[services]]
+  internal_port = 53
+  protocol = "udp"
+
+  [services.concurrency]
+    hard_limit = 100
+    soft_limit = 80
+    type = "connections"
+
+  [[services.tcp_checks]]
+    grace_period = "1s"
+    interval = "15s"
+    restart_limit = 0
+    timeout = "2s"
+
+  [[services.ports]]
+    port = "53"
+
+[[services]]
+  internal_port = 53
+  protocol = "tcp"
+
+  [services.concurrency]
+    hard_limit = 100
+    soft_limit = 80
+    type = "connections"
+
+  [[services.tcp_checks]]
+    grace_period = "1s"
+    interval = "15s"
+    restart_limit = 0
+    timeout = "2s"
+
+  [[services.ports]]
+    port = "53"
