@@ -1,6 +1,6 @@
 #!/bin/sh
 
-sed -i 's|.*newServer.*|'newServer\(\{address=\"fdaa:1:160b:0:1::2\"\,\ tcpOnly=true\}\)'|g' /etc/dnsdist.conf
+sed -i 's|.*newServer.*|'newServer\(\{address=\"$DNSDISTCONF_BACKEND_IP\"\,\ tcpOnly=true\}\)'|g' /etc/dnsdist.conf
 
 if grep -q setKey "/etc/dnsdist.conf"; then
   echo "Key already set, skip."
