@@ -21,12 +21,6 @@ processes = []
     soft_limit = 80
     type = "connections"
 
-  [[services.tcp_checks]]
-    grace_period = "1s"
-    interval = "15s"
-    restart_limit = 0
-    timeout = "2s"
-
   [[services.ports]]
     port = "53"
 
@@ -51,7 +45,6 @@ processes = []
 [[services]]
   http_checks = []
   internal_port = 80
-  processes = ["app"]
   protocol = "tcp"
   script_checks = []
   [services.concurrency]
@@ -73,3 +66,7 @@ processes = []
     interval = "15s"
     restart_limit = 0
     timeout = "2s"
+
+[metrics]
+  port = 8083
+  path = "/metrics"
