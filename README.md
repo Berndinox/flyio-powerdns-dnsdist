@@ -1,5 +1,6 @@
 # flyio-powerdns-dnsdist
 DNS LB and SEC for Fly.io  
+Credits and thanks to: https://dnsdist.org/. 
 Is connecting a PDNS Instance on Fly.io.    
 From the PDNS App issue: `flyctl ips allocate-v6 --private`  
 
