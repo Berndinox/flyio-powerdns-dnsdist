@@ -19,4 +19,5 @@ The config will automaticly add  `tcpOnly=true` to the PDNS-Auth Backend.
 The private IPv6 IP of the PDNS Auth Server (see outpul above cmd).  
 **DNSDISTCONF_RECURSOR_IP** = "9.9.9.9"
 Your Resolver for non auth zones.  
-
+**DNSDISTCONF_MAIN_DOMAIN** = "MY.AUTHNS.DOMAIN"
+Specify the Domain of your Nameserver itself here.
