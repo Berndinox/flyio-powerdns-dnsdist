@@ -12,7 +12,7 @@ RUN apk --update --no-cache add \
         dnsdist \
         curl \
     && rm -rf /var/cache/apk/* \
-    && rm -rf /tmp/* \
+    && rm -rf /tmp/* \ 
     && rm -rf /var/log/* \
     && chmod +x /usr/local/bin/entrypoint.sh \
     && touch /etc/authdomains.txt

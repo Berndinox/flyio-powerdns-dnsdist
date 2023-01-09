@@ -11,8 +11,7 @@ sed -i -e 's|SUPERSECRETPWKEY|'$(RANDOMPW)'|g' /etc/dnsdist.conf
 sed -i -e 's|SUPERSECRETAPIKEY|'$(RANDOMPW)'|g' /etc/dnsdist.conf
 
 if [ "$DNSDISTCONF_MAIN_DOMAIN" == "dnskrake.top" ]; then
-  echo "66.241.125.160   dash.dnskrake.top"  >> /etc/hosts
-  curl -s https://dash.dnskrake.top/static/domainlist.txt --output /etc/authdomains.txt
+  curl -s http://[$PDNS_WORKER_IP]:80/domainlist.txt --output /etc/authdomains.txt
 fi
 
 if [ ! -s /etc/authdomains.txt ]; then
