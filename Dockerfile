@@ -1,7 +1,8 @@
 FROM alpine:latest
 LABEL maintainer="Bernd Klaus"
 
-ENV DNSDISTCONF_BACKEND_IP="8.8.8.8"
+ENV DNSDISTCONF_BACKEND_IP= "8.8.8.8" \
+    DNSDISTCONF_RECURSOR_IP = "9.9.9.9"
 
 COPY dnsdist.conf /etc/dnsdist.conf
 COPY entrypoint.sh /usr/local/bin/
