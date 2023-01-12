@@ -5,17 +5,23 @@ function RANDOMPW(){
     echo $rando
 }
 
-sed -i 's|.*IP-AUTH.*|'newServer\(\{address=\"$DNSDISTCONF_BACKEND_IP\"\,\ tcpOnly=true\,\ pool=\"auth\"\}\)'|g' /etc/dnsdist.conf
-sed -i 's|.*IP-REC.*|'newServer\(\{address=\"$DNSDISTCONF_RECURSOR_IP\"\}\)'|g' /etc/dnsdist.conf
+
 sed -i -e 's|SUPERSECRETPWKEY|'$(RANDOMPW)'|g' /etc/dnsdist.conf
 sed -i -e 's|SUPERSECRETAPIKEY|'$(RANDOMPW)'|g' /etc/dnsdist.conf
 
-if [ "$DNSDISTCONF_MAIN_DOMAIN" == "dnskrake.top" ]; then
-  curl -s http://[$PDNS_WORKER_IP]:80/domainlist.txt --output /etc/authdomains.txt
-fi
-
-if [ ! -s /etc/authdomains.txt ]; then
-  echo $DNSDISTCONF_MAIN_DOMAIN > /etc/authdomains.txt
+if [ "$DNSDIST_ENABLE_RECURSOR" == "true" ]; then
+  sed -i 's|.*IP-AUTH.*|'newServer\(\{address=\"$DNSDISTCONF_BACKEND_IP\"\,\ tcpOnly=true\,\ pool=\"auth\"\}\)'|g' /etc/dnsdist.conf
+  sed -i 's|.*IP-REC.*|'newServer\(\{address=\"$DNSDISTCONF_RECURSOR_IP\"\}\)'|g' /etc/dnsdist.conf
+  touch /etc/authdomains.txt
+  if [ "$DNSDISTCONF_MAIN_DOMAIN" == "dnskrake.top" ]; then
+    curl -s http://[$PDNS_WORKER_IP]:80/domainlist.txt --output /etc/authdomains.txt
+  fi
+  if [ ! -s /etc/authdomains.txt ]; then
+    echo $DNSDISTCONF_MAIN_DOMAIN > /etc/authdomains.txt
+  fi
+else
+  sed -i 's|.*IP-AUTH.*|'newServer\(\{address=\"$DNSDISTCONF_BACKEND_IP\"\,\ tcpOnly=true\}\)'|g' /etc/dnsdist.conf
+  sed -i '/.*IP-REC.*/d' /etc/dnsdist.conf  
 fi
 
 if grep -q setKey "/etc/dnsdist.conf"; then

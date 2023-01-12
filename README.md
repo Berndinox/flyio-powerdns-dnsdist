@@ -20,7 +20,11 @@ The config will automaticly add  `tcpOnly=true` to the PDNS-Auth Backend.
 ## Config
 **DNSDISTCONF_BACKEND_IP** = "[::0]"  
 The private IPv6 IP of the PDNS Auth Server (see outpul above cmd).  
+**DNSDIST_ENABLE_RECURSOR** = "false" or "true"  
+Auth only or forward recusive?  
 **DNSDISTCONF_RECURSOR_IP** = "9.9.9.9"
-Your Resolver for non auth zones.  
+Your Resolver for non auth zones, if Recursor is enabled.  
 **DNSDISTCONF_MAIN_DOMAIN** = "MY.AUTHNS.DOMAIN"
-Specify the Domain of your Nameserver itself here.
+The Auth Domain, only required if Recursor is true.  
+**PDNS_WORKER_IP** = "IP-Address"  
+Curls (via http:// port 80) the endpoint /domainlist.txt if you have more then one AUTH Domain. Optional!  
