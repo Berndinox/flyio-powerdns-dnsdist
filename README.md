@@ -24,7 +24,9 @@ The private IPv6 IP of the PDNS Auth Server (see outpul above cmd).
 Auth only or forward recusive?  
 **DNSDISTCONF_RECURSOR_IP** = "9.9.9.9"
 Your Resolver for non auth zones, if Recursor is enabled.  
-**DNSDISTCONF_MAIN_DOMAIN** = "MY.AUTHNS.DOMAIN"
-The Auth Domain, only required if Recursor is true.  
-**PDNS_WORKER_IP** = "IP-Address"  
-Curls (via http:// port 80) the endpoint /domainlist.txt if you have more then one AUTH Domain. Optional!  
+**DNSDISTCONF_AUTH_MODE** = "MY.AUTHNS.DOMAIN"  
+Required if "RECURSOR" is true.  
+Speficy a single Domain if you have one auth domain only.  
+Set to "API" if DNSDIST should scrap the auth domains from PDNS-Auth.  
+**PDNS_AUTH_APIKEY** = "KEY"  
+Required if AUTH_MODE is API. Key is used on Container-Start only and then removed.  

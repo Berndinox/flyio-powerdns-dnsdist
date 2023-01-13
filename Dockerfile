@@ -12,6 +12,7 @@ COPY entrypoint.sh /usr/local/bin/
 RUN apk --update --no-cache add \
         dnsdist \
         curl \
+        jq \
     && rm -rf /var/cache/apk/* \
     && rm -rf /tmp/* \ 
     && rm -rf /var/log/* \

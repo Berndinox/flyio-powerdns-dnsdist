@@ -13,11 +13,12 @@ if [ "$DNSDIST_ENABLE_RECURSOR" == "true" ]; then
   sed -i 's|.*IP-AUTH.*|'newServer\(\{address=\"$DNSDISTCONF_BACKEND_IP\"\,\ tcpOnly=true\,\ pool=\"auth\"\}\)'|g' /etc/dnsdist.conf
   sed -i 's|.*IP-REC.*|'newServer\(\{address=\"$DNSDISTCONF_RECURSOR_IP\"\}\)'|g' /etc/dnsdist.conf
   touch /etc/authdomains.txt
-  if [ "$DNSDISTCONF_MAIN_DOMAIN" == "dnskrake.top" ]; then
-    curl -s http://[$PDNS_WORKER_IP]:80/domainlist.txt --output /etc/authdomains.txt
-  fi
-  if [ ! -s /etc/authdomains.txt ]; then
-    echo $DNSDISTCONF_MAIN_DOMAIN > /etc/authdomains.txt
+  if [ "$DNSDISTCONF_AUTH_MODE" == "API" ]; then
+    curl -s -H "X-API-Key: $PDNS_AUTH_APIKEY" http://[$DNSDISTCONF_BACKEND_IP]:80/api/v1/servers/localhost/zones | jq '.[].id' -r | sed 's/.$//' > /etc/authdomains.txt
+    unset PDNS_AUTH_APIKEY
+  else
+    echo $DNSDISTCONF_AUTH_MODE > /etc/authdomains.txt
+    if [ -z "$PDNS_AUTH_APIKEY" ]; then unset PDNS_AUTH_APIKEY; fi
   fi
 else
   sed -i 's|.*IP-AUTH.*|'newServer\(\{address=\"$DNSDISTCONF_BACKEND_IP\"\,\ tcpOnly=true\}\)'|g' /etc/dnsdist.conf
